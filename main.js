@@ -14,7 +14,7 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     icon: path.join(__dirname, './src/images/logo.png'),
-    title: "OneNote",
+    title: "WhatsApp",
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true
@@ -29,17 +29,10 @@ function createWindow () {
   // conventional way of opning a link in a browserWindow
   mainWindow.loadURL('https://web.whatsapp.com',
   {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
-  // if (typeof conf.get('lastLink') === 'undefined'){
-  //   mainWindow.loadURL('https://onenote.com/')
-  // } else {
-  //   mainWindow.loadURL(conf.get('lastLink'))
-  // }
   
-
   // Emitted when the window is going to be closed
   mainWindow.on('close', function() {
     conf.set('windowBounds', mainWindow.getBounds())
-    conf.set("lastLink", mainWindow.webContents.getURL())
   })
 
   // Emitted when the window is closed.
@@ -51,12 +44,6 @@ function createWindow () {
   mainWindow.on('resize', function () {
     conf.set("windowBounds", mainWindow.getBounds())
   })
-
-  // log link once page is completely loaded
-  // mainWindow.webContents.on('did-stop-loading', function() {
-  //   console.log(mainWindow.webContents.getURL())
-  //   conf.set("lastLink", mainWindow.webContents.getURL())
-  // })
 }
 
 // This method will be called when Electron has finished
