@@ -1,0 +1,15 @@
+{
+  "genericName": "Messenger",
+  "section": "Chat",
+  "dest": "dist/installers/",
+  "icon": "./src/images/logo.png",
+  "categories": [
+    "Social",
+    "Chat",
+    "Network",
+    "Messenger"
+  ],
+  "lintianOverrides": [
+    "changelog-file-missing-in-native-package"
+  ]
+}

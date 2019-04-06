@@ -31,5 +31,14 @@
     "name": "Anuj Datar",
     "email": "anuj.datar@gmail.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.1.4",
+    "electron-installer-debian": "^1.1.1",
+    "electron-packager": "^13.1.1",
+    "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "electron-store": "^3.1.0"
+  }
 }
