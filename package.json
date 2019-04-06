@@ -1,0 +1,35 @@
+{
+  "name": "whatsapp-linux",
+  "productName": "WhatsApp",
+  "version": "1.0.0",
+  "description": "WhatsApp desktop for linux",
+  "productDescription": "web.whatsapp.com wrapped in electron packaged for Linux (debian)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "clear-build": "rimraf dist/ release-builds/",
+    "package-linux": "electron-packager . whatsapp-linux --overwrite --asar --platform=linux --arch=x64 --icon=./src/images/logo.png --prune=true --out=release-builds",
+    "create-debian-installer": "electron-installer-debian --src release-builds/whatsapp-linux-linux-x64/ --arch amd64 --config debian-config.json",
+    "deb-pack-install": "npm run clear-build && npm run package-linux && npm run create-debian-installer",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anujdatar/whatsapp-linux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anujdatar/whatsapp-linux/issues"
+  },
+  "homepage": "https://github.com/anujdatar/whatsapp-linux#readme",
+  "keywords": [
+    "WhatsApp",
+    "Messenger",
+    "Electron",
+    "desktop"
+  ],
+  "author": {
+    "name": "Anuj Datar",
+    "email": "anuj.datar@gmail.com"
+  },
+  "license": "MIT"
+}
