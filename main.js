@@ -27,7 +27,8 @@ function createWindow () {
   }
 
   // conventional way of opning a link in a browserWindow
-  mainWindow.loadURL('https://web.whatsapp.com')
+  mainWindow.loadURL('https://web.whatsapp.com',
+  {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
   // if (typeof conf.get('lastLink') === 'undefined'){
   //   mainWindow.loadURL('https://onenote.com/')
   // } else {
@@ -66,6 +67,13 @@ app.on('ready', function() {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
+  // clears service worker before close
+  // makes new window register new service worker
+  // otherwise you get the WhatsApp browser version error
+  mainWindow.webContents.unregisterServiceWorker(() => {
+    console.log('Goodbye!!')
+  })
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
@@ -75,4 +83,15 @@ app.on('activate', function () {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) createWindow()
+})
+
+// Limit/disable the creation of additional windows
+app.on('web-contents-created', (event, contents) => {
+  contents.on('new-window', (event, navigationUrl) => {
+    // In this example, we'll ask the operating system
+    // to open this event's url in the default browser.
+    event.preventDefault()
+
+    shell.openExternal(navigationUrl)
+  })
 })
