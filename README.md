@@ -11,8 +11,8 @@ ___
 
 ## Running the dev environment
 ```
-git clone https://github.com/anujdatar/whatsapp-linux
-cd whatsapp-linux
+git clone https://github.com/anujdatar/whatsapp-desktop
+cd whatsapp-desktop
 npm install
 npm start
 ```
@@ -50,7 +50,7 @@ Individual steps:
 
 
 ## License
-This project is licensed under the MIT License - see [LICENSE](https://github.com/anujdatar/whatsapp-linux/blob/master/LICENSE) for details.
+This project is licensed under the MIT License - see [LICENSE](https://github.com/anujdatar/whatsapp-desktop/LICENSE) for details.
 
 
 **WhatsApp**, the name, website, images/icons and code are the intellectual properties of [WhatsApp](https://www.whatsapp.com/), [Facebook](https://facebook.com/).

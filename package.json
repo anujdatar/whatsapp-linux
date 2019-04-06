@@ -1,5 +1,5 @@
 {
-  "name": "whatsapp-linux",
+  "name": "whatsapp-desktop",
   "productName": "WhatsApp",
   "version": "1.0.0",
   "description": "WhatsApp desktop for linux",
@@ -8,19 +8,19 @@
   "scripts": {
     "start": "electron .",
     "clear-build": "rimraf dist/ release-builds/",
-    "package-linux": "electron-packager . whatsapp-linux --overwrite --asar --platform=linux --arch=x64 --icon=./src/images/logo.png --prune=true --out=release-builds",
-    "create-debian-installer": "electron-installer-debian --src release-builds/whatsapp-linux-linux-x64/ --arch amd64 --config debian-config.json",
+    "package-linux": "electron-packager . whatsapp-desktop --overwrite --asar --platform=linux --arch=x64 --icon=./src/images/logo.png --prune=true --out=release-builds",
+    "create-debian-installer": "electron-installer-debian --src release-builds/whatsapp-desktop-linux-x64/ --arch amd64 --config debian-config.json",
     "deb-pack-install": "npm run clear-build && npm run package-linux && npm run create-debian-installer",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anujdatar/whatsapp-linux.git"
+    "url": "git+https://github.com/anujdatar/whatsapp-desktop.git"
   },
   "bugs": {
-    "url": "https://github.com/anujdatar/whatsapp-linux/issues"
+    "url": "https://github.com/anujdatar/whatsapp-desktop/issues"
   },
-  "homepage": "https://github.com/anujdatar/whatsapp-linux#readme",
+  "homepage": "https://github.com/anujdatar/whatsapp-desktop#readme",
   "keywords": [
     "WhatsApp",
     "Messenger",
