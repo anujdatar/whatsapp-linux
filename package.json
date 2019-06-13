@@ -1,17 +1,13 @@
 {
   "name": "whatsapp-desktop",
   "productName": "WhatsApp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "WhatsApp desktop for linux",
   "productDescription": "web.whatsapp.com wrapped in electron packaged for Linux (debian)",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "clear-build": "rimraf dist/ release-builds/",
-    "package-linux": "electron-packager . whatsapp-desktop --overwrite --asar --platform=linux --arch=x64 --icon=./src/images/logo.png --prune=true --out=release-builds",
-    "create-debian-installer": "electron-installer-debian --src release-builds/whatsapp-desktop-linux-x64/ --arch amd64 --config debian-config.json",
-    "deb-pack-install": "npm run clear-build && npm run package-linux && npm run create-debian-installer",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ./src/js/main.js",
+    "clean-slate": "rimraf dist/"
   },
   "repository": {
     "type": "git",
@@ -33,12 +29,12 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^4.1.4",
-    "electron-installer-debian": "^1.1.1",
-    "electron-packager": "^13.1.1",
+    "electron": "^5.0.3",
+    "electron-builder": "^20.43.0",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "electron-store": "^3.1.0"
+    "electron-spellchecker": "^2.0.4",
+    "electron-store": "^3.3.0"
   }
 }
