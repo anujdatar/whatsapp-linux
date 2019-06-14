@@ -6,7 +6,7 @@
   "productDescription": "web.whatsapp.com wrapped in electron packaged for Linux (debian)",
   "main": "main.js",
   "scripts": {
-    "start": "electron ./src/js/main.js",
+    "start": "electron ./src/main.js",
     "clean-slate": "rimraf dist/"
   },
   "repository": {
@@ -31,10 +31,12 @@
   "devDependencies": {
     "electron": "^5.0.3",
     "electron-builder": "^20.43.0",
+    "electron-rebuild": "^1.8.5",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "electron-spellchecker": "^2.0.4",
+    "electron-editor-context-menu": "^1.1.1",
+    "electron-spell-check-provider": "^1.1.1",
     "electron-store": "^3.3.0"
   }
 }
