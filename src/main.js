@@ -5,7 +5,8 @@ const electronStore = require('electron-store')
 const fs = require('fs')
 const path = require('path')
 
-// define main window object to avoid garbage collection
+// define main window object to avoid deconstruction during
+//  automatic garbage collection
 let mainWindow
 
 // electron store object
@@ -16,9 +17,9 @@ function createWindow() {
     icon: path.join(__dirname, './images/logo.png'),
     title: 'WhatsApp',
     webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, './js/preload.js')
+      // nodeIntegration: false,
+      // contextIsolation: true,
+      preload: path.join(__dirname, './js/preload1.js')
     }
   })
 
@@ -28,8 +29,10 @@ function createWindow() {
   }
 
   // load url or file in browser window
-  mainWindow.loadFile(path.join(__dirname, './html/index.html'))
-
+  // mainWindow.loadFile(path.join(__dirname, './html/index.html'))
+  mainWindow.loadURL('https://www.rapidtables.com/tools/notepad.html',
+  {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
+  
   // open dev tools
   mainWindow.webContents.openDevTools()
 
@@ -59,6 +62,12 @@ app.on('ready', function () {
 
 // emitted when all app windows are closed
 app.on('window-all-closed', function () {
+  // ########### deprecated, to be removed soon ##############
+  mainWindow.webContents.unregisterServiceWorker(() => {
+    console.log('Goodbye!!')
+  })
+  // ########################################################
+
   // if window or linux, quit app. on mac, wait till explicit quit
   if (process.platform !== 'darwin') {
     app.quit()

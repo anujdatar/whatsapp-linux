@@ -1,4 +1,6 @@
-console.log('hello from index')
+var webFrame = require('electron').webFrame;
+var SpellCheckProvider = require('electron-spell-check-provider');
 
-otherThingSpan = document.getElementById('somethingElse')
-otherThingSpan.innerHTML = 'other thing span from index'
+webFrame.setSpellCheckProvider('en-US', new SpellCheckProvider('en-US'));
+
+console.log('hello from index')
