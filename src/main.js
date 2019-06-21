@@ -1,6 +1,6 @@
 'use strict'
 
-const { app, BrowserWindow, shell } = require('electron')
+const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron')
 const electronStore = require('electron-store')
 const fs = require('fs')
 const path = require('path')
@@ -17,9 +17,9 @@ function createWindow() {
     icon: path.join(__dirname, './images/logo.png'),
     title: 'WhatsApp',
     webPreferences: {
-      // nodeIntegration: false,
+      // nodeIntegration: true,
       // contextIsolation: true,
-      preload: path.join(__dirname, './js/preload1.js')
+      preload: path.join(__dirname, './js/preload.js')
     }
   })
 
@@ -29,9 +29,9 @@ function createWindow() {
   }
 
   // load url or file in browser window
-  // mainWindow.loadFile(path.join(__dirname, './html/index.html'))
-  mainWindow.loadURL('https://www.rapidtables.com/tools/notepad.html',
-  {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
+  mainWindow.loadFile(path.join(__dirname, './html/index.html'))
+  // mainWindow.loadURL('https://www.rapidtables.com/tools/notepad.html',
+  // {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
   
   // open dev tools
   mainWindow.webContents.openDevTools()
@@ -58,6 +58,21 @@ function createWindow() {
 // electron initialized and ready
 app.on('ready', function () {
   createWindow()
+
+  // const ctxMenu = new Menu()
+  // ctxMenu.append(new MenuItem({
+  //   label: 'hola',
+  //   click() {
+  //     console.log('clicked context, hola')
+  //   }
+  // }))
+  // mainWindow.webContents.on('context-menu', (e, params) => {
+  //   e.preventDefault()
+  //   if (params.mispelledWord) {
+  //     console.log('aaaaaaaaaaaaaa')
+  //   }
+  //   ctxMenu.popup(mainWindow, params.x, params.y)
+  // })
 })
 
 // emitted when all app windows are closed

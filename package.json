@@ -7,7 +7,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron ./src/main.js",
-    "clean-slate": "rimraf dist/"
+    "clean-slate": "rimraf dist/",
+    "rebuild": "electron-rebuild -f -w spellchecker"
   },
   "repository": {
     "type": "git",
@@ -35,8 +36,8 @@
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "electron-editor-context-menu": "^1.1.1",
-    "electron-spell-check-provider": "^1.1.1",
-    "electron-store": "^3.3.0"
+    "@anujdatar/electron-context-menu": "^1.0.3",
+    "electron-store": "^3.3.0",
+    "spellchecker": "^3.6.0"
   }
 }
