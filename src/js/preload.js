@@ -7,85 +7,69 @@ window.addEventListener('DOMContentLoaded', () => {
   const spellChecker = require('spellchecker')
   const webFrame = electron.webFrame
 
-  const ctxMenuBuilder = remote.require('@anujdatar/electron-context-menu')
+  const { buildContextMenu, copyContextMenu, pasteContextMenu,
+    reloadContextMenu } = remote.require('@anujdatar/electron-context-menu')
 
-  // initialize selection object to avoid auto-garbage-collection
-  let selection = {}
-  function resetSelection() {
-    selection = {
-      isMisspelled: false,
-      spellingSuggestions: []
-    };
-  }
-  resetSelection();
-  // Reset the selection when clicking around
-  window.addEventListener('mousedown', resetSelection);
+  const {noSuggestionsTemplate, suggestionMenuItem, suggestionsTemplate} = require('./helpers')
 
-  
-
+  // run spell check to underline all misspelled words
   webFrame.setSpellCheckProvider('en-US', {
     spellCheck (words, callback) {
       const misspelled = words.filter(word => spellChecker.isMisspelled(word))
       callback(misspelled)
-      console.log(misspelled)
     }
   })
 
-  prefixMenu = {
-    exists: true,
-    menuItems: [
-      {
-        label: 'prefix1',
-        click: function() {
-          console.log('prefix 1 clicked')
-        }
-      }
-    ]
-  }
-
-  suffixMenu = {
-    exists: true,
-    menuItems: [
-      {
-        label: 'suffix1',
-        click: function() {
-          console.log('suffix 1 clicked')
-        }
-      },
-      {
-        label: 'suffix2',
-        click: function() {
-          console.log('suffix 2 clicked')
-        }
-      }
-    ]
-  }
-
-  window.addEventListener('contextmenu', function(e) {
+  // generate context menu
+  window.addEventListener('contextmenu', (e) => {
+    e.preventDefault()
+    
     let ctxMenu
     if (!e.target.closest('textarea, input, [contenteditable="true"]')) {
-      ctxMenu = new ctxMenuBuilder()
+      // if click in uneditable area
+      if (window.getSelection().toString() === '') {
+        // if no text selected
+        ctxMenu = new reloadContextMenu()
+        ctxMenu.popup(remote.getCurrentWindow())
+      } else {
+        // if text is selected
+        ctxMenu = new copyContextMenu()
+        ctxMenu.popup(remote.getCurrentWindow())
+      }
     } else {
-      ctxMenu = new ctxMenuBuilder(prefixMenu, suffixMenu, '')
+      // if click in editable text area
+      if (window.getSelection().toString() === '') {
+        // if no text is selected in textarea
+        ctxMenu = new pasteContextMenu()
+        ctxMenu.popup(remote.getCurrentWindow())
+      } else {
+        // if text is selected in textarea
+        selection = window.getSelection().toString()
+        if (!spellChecker.isMisspelled(selection)) {
+          // if selected word is spelled correctly
+          ctxMenu = new buildContextMenu()
+          ctxMenu.popup(remote.getCurrentWindow())
+        } else {
+          // selected word is misspelled
+          let suggestions = spellChecker.getCorrectionsForMisspelling(selection)
+          if (suggestions.length === 0) {
+            // if no suggestions are found for word in dictionary
+            ctxMenu = new buildContextMenu(noSuggestionsTemplate, {})
+            ctxMenu.popup(remote.getCurrentWindow())
+          } else {
+            suggestions = suggestions.slice(0, 3)
+            // console.log(suggestions)
+            const suggestedItems = suggestions.map((suggestion) => {
+              menuItem = new suggestionMenuItem(suggestion)
+              return menuItem.item
+            })
+            const suggestedMenu = new suggestionsTemplate(suggestedItems)
+
+            ctxMenu = new buildContextMenu(suggestedMenu.menu, {})
+            ctxMenu.popup(remote.getCurrentWindow())
+          }
+        }
+      }
     }
-    ctxMenu.popup(remote.getCurrentWindow())
   })
-
-  // window.addEventListener('contextmenu', (e) => {
-  //   console.log('ctxMenu requested')
-  //   e.preventDefault()
-  //   ctxMenu.popup(remote.getCurrentWindow())
-  //   if (window.getSelection()) {
-  //     const a = window.getSelection().toString()
-  //     if (spellChecker.isMisspelled(a)) {
-  //       const corrections = spellChecker.getCorrectionsForMisspelling(a)
-  //       console.log(corrections)
-  //     }
-  //   }
-
-
-    // if (params.misspelledWord) {
-    //   console.log('aaaaaaaaaa')
-    // }
-  // })
 })
