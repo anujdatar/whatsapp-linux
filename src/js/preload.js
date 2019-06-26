@@ -7,10 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const spellChecker = require('spellchecker')
   const webFrame = electron.webFrame
 
-  const { buildContextMenu, copyContextMenu, pasteContextMenu,
-    reloadContextMenu } = remote.require('@anujdatar/electron-context-menu')
-
-  const {noSuggestionsTemplate, suggestionMenuItem, suggestionsTemplate} = require('./helpers')
+  const { buildMenus } = require('@anujdatar/electron-context-menu')
 
   // run spell check to underline all misspelled words
   webFrame.setSpellCheckProvider('en-US', {
@@ -23,53 +20,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // generate context menu
   window.addEventListener('contextmenu', (e) => {
     e.preventDefault()
-    
-    let ctxMenu
-    if (!e.target.closest('textarea, input, [contenteditable="true"]')) {
-      // if click in uneditable area
-      if (window.getSelection().toString() === '') {
-        // if no text selected
-        ctxMenu = new reloadContextMenu()
-        ctxMenu.popup(remote.getCurrentWindow())
-      } else {
-        // if text is selected
-        ctxMenu = new copyContextMenu()
-        ctxMenu.popup(remote.getCurrentWindow())
-      }
-    } else {
-      // if click in editable text area
-      if (window.getSelection().toString() === '') {
-        // if no text is selected in textarea
-        ctxMenu = new pasteContextMenu()
-        ctxMenu.popup(remote.getCurrentWindow())
-      } else {
-        // if text is selected in textarea
-        selection = window.getSelection().toString()
-        if (!spellChecker.isMisspelled(selection)) {
-          // if selected word is spelled correctly
-          ctxMenu = new buildContextMenu()
-          ctxMenu.popup(remote.getCurrentWindow())
-        } else {
-          // selected word is misspelled
-          let suggestions = spellChecker.getCorrectionsForMisspelling(selection)
-          if (suggestions.length === 0) {
-            // if no suggestions are found for word in dictionary
-            ctxMenu = new buildContextMenu(noSuggestionsTemplate, {})
-            ctxMenu.popup(remote.getCurrentWindow())
-          } else {
-            suggestions = suggestions.slice(0, 3)
-            // console.log(suggestions)
-            const suggestedItems = suggestions.map((suggestion) => {
-              menuItem = new suggestionMenuItem(suggestion)
-              return menuItem.item
-            })
-            const suggestedMenu = new suggestionsTemplate(suggestedItems)
 
-            ctxMenu = new buildContextMenu(suggestedMenu.menu, {})
-            ctxMenu.popup(remote.getCurrentWindow())
-          }
-        }
-      }
-    }
+    // check if right-click area is an editable textarea
+    const editable = e.target.closest('textarea, input, [contenteditable="true"]')
+
+    // build and show right-click context menus using custom function
+    let ctxMenu = buildMenus(editable, spellChecker)
+    ctxMenu.popup(remote.getCurrentWindow())
   })
 })

@@ -2,7 +2,7 @@
 
 const { app, BrowserWindow, Menu, MenuItem, shell } = require('electron')
 const electronStore = require('electron-store')
-const fs = require('fs')
+// const fs = require('fs')
 const path = require('path')
 
 // define main window object to avoid deconstruction during
@@ -58,21 +58,6 @@ function createWindow() {
 // electron initialized and ready
 app.on('ready', function () {
   createWindow()
-
-  // const ctxMenu = new Menu()
-  // ctxMenu.append(new MenuItem({
-  //   label: 'hola',
-  //   click() {
-  //     console.log('clicked context, hola')
-  //   }
-  // }))
-  // mainWindow.webContents.on('context-menu', (e, params) => {
-  //   e.preventDefault()
-  //   if (params.mispelledWord) {
-  //     console.log('aaaaaaaaaaaaaa')
-  //   }
-  //   ctxMenu.popup(mainWindow, params.x, params.y)
-  // })
 })
 
 // emitted when all app windows are closed
