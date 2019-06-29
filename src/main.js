@@ -32,6 +32,8 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, './html/index.html'))
   // mainWindow.loadURL('https://www.rapidtables.com/tools/notepad.html',
   // {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
+  // mainWindow.loadURL('https://web.whatsapp.com',
+  // {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
   
   // open dev tools
   mainWindow.webContents.openDevTools()

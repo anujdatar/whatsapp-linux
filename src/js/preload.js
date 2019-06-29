@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const spellChecker = require('spellchecker')
   const webFrame = electron.webFrame
 
-  const { buildMenus } = require('@anujdatar/electron-context-menu')
+  const { buildCtxMenus } = require('./ctxMenus')
 
   // run spell check to underline all misspelled words
   webFrame.setSpellCheckProvider('en-US', {
@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const editable = e.target.closest('textarea, input, [contenteditable="true"]')
 
     // build and show right-click context menus using custom function
-    let ctxMenu = buildMenus(editable, spellChecker)
+    let ctxMenu = buildCtxMenus(editable, spellChecker)
     ctxMenu.popup(remote.getCurrentWindow())
   })
 })
