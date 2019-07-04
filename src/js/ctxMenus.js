@@ -3,18 +3,11 @@ const { BuildContextMenu, menuTemplates } = require('@anujdatar/electron-context
 const buildCtxMenus = function (editable, spellChecker) {
   let ctxMenu
   selection = window.getSelection().toString()
-  if (!editable && !selection) {
-    // if right click in uneditable area and no text selected
-    ctxMenu = BuildContextMenu(menuTemplates.reload)
-  }
-  else if (!editable && selection) {
-    // if right click in uneditable area and text is selected
-    ctxMenu = BuildContextMenu(menuTemplates.copy)
-  } 
-  else if (editable && !selection) {
+  if (editable && !selection) {
     // if right-click is in editable textarea, but no text selected
     ctxMenu = BuildContextMenu(menuTemplates.paste)
-  } else {
+  } 
+  else if (editable && selection) {
     // right-click in editable textarea, and text is selected
     if (!spellChecker.isMisspelled(selection)) {
       // selected work spelled correctly
