@@ -33,7 +33,7 @@ function createWindow() {
   {userAgent: 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.106 Safari/537.36'})
   
   // open dev tools
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // emitted when window close is issued, but before object is destroyed
   mainWindow.on('close', function () {
