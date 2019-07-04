@@ -8,7 +8,8 @@
   "scripts": {
     "start": "electron ./src/main.js",
     "clean-slate": "rimraf dist/",
-    "rebuild": "electron-rebuild -f -w spellchecker"
+    "electron-rebuild": "electron-rebuild -f -w spellchecker",
+    "postinstall": "npm run electron-rebuild"
   },
   "repository": {
     "type": "git",
@@ -30,14 +31,14 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^5.0.3",
+    "electron": "^5.0.6",
     "electron-builder": "^20.43.0",
     "electron-rebuild": "^1.8.5",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
-    "@anujdatar/electron-context-menu": "^1.0.6-3",
-    "electron-store": "^3.3.0",
-    "spellchecker": "^3.6.0"
+    "@anujdatar/electron-context-menu": "^1.1.1",
+    "electron-store": "^4.0.0",
+    "spellchecker": "^3.6.1"
   }
 }
