@@ -14,7 +14,7 @@ const configStore = new electronStore()
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    icon: path.join(__dirname, './images/logo.png'),
+    icon: path.join(__dirname, './images/icon.png'),
     title: 'WhatsApp',
     webPreferences: {
       // nodeIntegration: true,

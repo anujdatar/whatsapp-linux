@@ -2,14 +2,15 @@
   "name": "whatsapp-desktop",
   "productName": "WhatsApp",
   "version": "1.1.0",
-  "description": "WhatsApp desktop for linux",
+  "description": "WhatsApp Desktop Client for Linux",
   "productDescription": "web.whatsapp.com wrapped in electron packaged for Linux (debian)",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
     "start": "electron ./src/main.js",
-    "clean-slate": "rimraf dist/",
-    "electron-rebuild": "electron-rebuild -f -w spellchecker",
-    "postinstall": "npm run electron-rebuild"
+    "clean-slate": "rimraf dist/ release-builds/",
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -25,20 +26,46 @@
     "Electron",
     "desktop"
   ],
-  "author": {
-    "name": "Anuj Datar",
-    "email": "anuj.datar@gmail.com"
-  },
+  "author": "Anuj Datar <anuj.datar@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "electron": "^5.0.6",
     "electron-builder": "^20.44.4",
-    "electron-rebuild": "^1.8.5",
     "rimraf": "^2.6.3"
   },
   "dependencies": {
     "@anujdatar/electron-context-menu": "^1.1.1",
     "electron-store": "^4.0.0",
     "spellchecker": "^3.6.1"
+  },
+  "build": {
+    "appId": "org.anuj.whatsapp-desktop",
+    "asar": true,
+    "asarUnpack": [
+      "node_modules/spellchecker"
+    ],
+    "copyright": "©2019 Anuj Datar",
+    "linux": {
+      "category": "Chat;Social;Network;InstantMessaging",
+      "packageCategory": "Chat;Social;Network;InstantMessaging",
+      "description": "WhatsApp Desktop Client for Linux",
+      "synopsis": "WhatsApp Desktop",
+      "icon": "./src/images/icon.icns",
+      "target": [
+        "deb"
+      ],
+      "maintainer": "Anuj Datar <anuj.datar@gmail.com>",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "deb": {
+      "depends": [
+        "gconf2",
+        "gconf-service",
+        "libnotify4",
+        "libappindicator1",
+        "libxtst6",
+        "libnss3"
+      ]
+    }
   }
 }
