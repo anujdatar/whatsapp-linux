@@ -52,7 +52,8 @@
       "synopsis": "WhatsApp Desktop",
       "icon": "./src/images/icon.icns",
       "target": [
-        "deb"
+        "deb",
+        "AppImage"
       ],
       "maintainer": "Anuj Datar <anuj.datar@gmail.com>",
       "artifactName": "${productName}-${version}-${arch}.${ext}"

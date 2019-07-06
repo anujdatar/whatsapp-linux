@@ -68,9 +68,7 @@ app.on('window-all-closed', function () {
   // ########################################################
 
   // if window or linux, quit app. on mac, wait till explicit quit
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  if (process.platform !== 'darwin') app.quit()
 })
 
 // emitted when app icon clicked on MacOS
